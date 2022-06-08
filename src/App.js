@@ -54,15 +54,15 @@ function App() {
       console.log("wallet connected");
     }
     window.ethereum.on('accountsChanged', onAccountChange)
-    return(()=>{
-      window.ethereum.off('accountsChanged',onAccountChange)
-    })
+    // return(()=>{
+    //   window.ethereum.off('accountsChanged',onAccountChange)
+    // })
   },[])
 
 
   return (
     <div className="App">
-      <Router />      
+      <Router account={account} contract={contract} setAccount={setAccount}/>      
     </div>
   );
 }

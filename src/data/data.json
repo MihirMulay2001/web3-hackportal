@@ -1,0 +1,67 @@
+{
+    "id" : "JAKJDS",
+    "name": "Web3 Hackathon",
+    "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description.",
+    "image": "www.google.com" ,
+    "judges": [{
+        "url" : "https://www.twitter.com/elonmusk",
+        "address": "0x2323243"
+    },{
+        "url" : "https://www.twitter.com/elonmusk",
+        "address": "0x2323243"
+    },{
+        "url" : "https://www.twitter.com/elonmusk",
+        "address": "0x2323243"
+    },{
+        "url" : "https://www.twitter.com/elonmusk",
+        "address": "0x2323243"
+    }],
+    "timeout": true,
+    "projects" : [
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        },
+        {
+            "id" : "jnkcjbdwcjw",
+            "title" : "Education DAO",
+            "description" :"This is a brief description. This is a brief description.This is a brief description.This is a brief description."
+        }
+    ]
+}

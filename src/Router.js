@@ -6,14 +6,14 @@ import CreateHackathon from './pages/CreateHackathon'
 import Hackathon from './pages/Hackathon'
 import Leaderboard from './pages/Leaderboard'
 
-export default function Router() {
+export default function Router({setAccount, account}) {
   return (
     <>
         <Routes>
-            <Route path='/home' element={<Homepage />} />
-            <Route path='/signup' element={<Signup />} />
+            <Route path='/home' element={<Homepage account={account}/>} />
+            <Route path='/signup' element={<Signup account={account} setAccount={setAccount}/>} />
             <Route path='/createhack' element={<CreateHackathon />} />
-            <Route path='/hackathon' element={<Hackathon />}/>
+            <Route path='/hackathon:hackId' element={<Hackathon />}/>
             <Route path='/leaderboard' element={<Leaderboard />}/>
         </Routes>
     </>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useFetcher from "../hooks/useFetcher";
 import { useNavigate } from "react-router-dom";
 
-const connectWalletHandler = async (setCurrentAccount) => {
+const connectWalletHandler = async (setCurrentAccount, setFlag) => {
   const { ethereum } = window;
   if (!ethereum) {
     alert("Allow website to access metamask wallet");
@@ -12,6 +12,7 @@ const connectWalletHandler = async (setCurrentAccount) => {
         method: "eth_requestAccounts",
       });
       setCurrentAccount(accounts[0]);
+      setFlag(true);
     } catch (error) {
       console.log(error);
     }
@@ -30,17 +31,33 @@ function SendData() {
   }
 }
 
-export default function Signup() {
+export default function Signup({ account, setAccount }) {
   const [flag, setFlag] = React.useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    connectWalletHandler(setAccount, setFlag);
+  }, []);
+
   return (
     <div>
-      <button onClick={connectWalletHandler}>Connect wallet</button>
-      <input type="text" placeholder="mihir" />
-      <input type="email" placeholder="mihir@gmail.com" />
-      {flag ? <button onClick={handleSubmit}>Log In</button> : <SendData />}
+      <div>
+        <h3>Login</h3>
+        <button onClick={(e) => connectWalletHandler(setAccount)}>
+          {account ? "Wallet connected" : "Connect wallet"}
+        </button>
+      </div>
+      <div>
+        <h3>Sign Up</h3>
+        <input type="text" placeholder="mihir" />
+        <input type="email" placeholder="mihir@gmail.com" />
+        <button onClick={(e) => connectWalletHandler(setAccount, setFlag)}>
+          {account ? "Wallet connected" : "Connect wallet"}
+        </button>
+        {flag ? <button onClick={handleSubmit}>Log In</button> : <SendData />}
+      </div>
     </div>
   );
 }
