@@ -2,10 +2,18 @@
     "id": "0928b3298",
     "name": "Web3 DAO",
     "description": "Description",
-    "github" : "https://www.github.com",
-    "etherscan" : "",
+    "github": "https://www.github.com",
+    "etherscan": "",
+    "personType": "judge",
     "youtube": "",
     "sreenshots": [
-        "","",""
+        "",
+        "",
+        ""
+    ],
+    "tracks": [
+        "1st Place",
+        "2nd Place",
+        "3rd Place"
     ]
 }

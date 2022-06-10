@@ -3,6 +3,7 @@
     "name": "Web3 Hackathon",
     "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description.",
     "image": "www.google.com",
+    "personType": "judge",
     "judges": [
         {
             "url": "https://www.twitter.com/elonmusk",
