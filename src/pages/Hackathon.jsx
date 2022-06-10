@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetcher from "../hooks/useFetcher";
 import hackData from "../data/data.json";
-import ProjectsSection from "../components/ProjectsSection";
+import ProjectsSection from "../sections/ProjectsSection";
+import HackathonHeader from "../components/HackathonHeader";
+import LeaderboardSection from "../sections/LeaderboardSection";
+import styles from "../styles/hackathon.module.css";
 
 export default function Hackathon() {
   const { hackId } = useParams();
@@ -13,27 +16,16 @@ export default function Hackathon() {
   // }
 
   return (
-    <div>
+    <div className={styles.container}>
       <div>
-        <div>
-          <h3>{hackData.name}</h3>
-          <h6>{hackData.description}</h6>
-          <div>
-            {hackData.judges.map((judge) => (
-              <div>
-                <a href={judge.url}>
-                  <img src="" alt="judge profile pic" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <img src={""} alt="hackathon" />
-        </div>
+        <HackathonHeader hackData={hackData} />
       </div>
-      {hackData.timeout ? (
-        <ProjectsSection />
+      {hackData.hacktimeout ? (
+        hackData.votetimeout ? (
+          <LeaderboardSection />
+        ) : (
+          <ProjectsSection hackId={hackId} />
+        )
       ) : (
         <div> Wait until hackathon is over </div>
       )}

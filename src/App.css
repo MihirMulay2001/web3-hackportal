@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  --dark-purple: #9D4EDD;
+  --light-purple: #EOAAFF;
+  --black: #272727;
+  --white: #f7f7f7;
 }
-
-
