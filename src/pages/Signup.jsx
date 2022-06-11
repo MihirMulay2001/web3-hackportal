@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useFetcher from "../hooks/useFetcher";
 import { useNavigate } from "react-router-dom";
+import styles from "../styles/signup.module.css";
 
 const connectWalletHandler = async (setCurrentAccount, setFlag) => {
   const { ethereum } = window;
@@ -42,14 +43,14 @@ export default function Signup({ account, setAccount }) {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className={styles.container}>
+      <div className={styles.login}>
         <h3>Login</h3>
         <button onClick={(e) => connectWalletHandler(setAccount)}>
           {account ? "Wallet connected" : "Connect wallet"}
         </button>
       </div>
-      <div>
+      <div className={styles.signup}>
         <h3>Sign Up</h3>
         <input type="text" placeholder="mihir" />
         <input type="email" placeholder="mihir@gmail.com" />
