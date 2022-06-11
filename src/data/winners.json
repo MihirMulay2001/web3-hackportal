@@ -5,38 +5,43 @@
             "id": "jnkcjbdwcjw",
             "title": "Education DAO",
             "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description."
-        }
+        },
+        "isWinner": true
     },
     {
-        "track": "1st Place",
+        "track": "2nd Place",
         "project": {
             "id": "jnkcjbdwcjw",
             "title": "Education DAO",
             "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description."
-        }
+        },
+        "isWinner": false
     },
     {
-        "track": "1st Place",
+        "track": "3rd Place",
         "project": {
             "id": "jnkcjbdwcjw",
             "title": "Education DAO",
             "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description."
-        }
+        },
+        "isWinner": false
     },
     {
-        "track": "1st Place",
+        "track": "4th Place",
         "project": {
             "id": "jnkcjbdwcjw",
             "title": "Education DAO",
             "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description."
-        }
+        },
+        "isWinner": false
     },
     {
-        "track": "1st Place",
+        "track": "5th Place",
         "project": {
             "id": "jnkcjbdwcjw",
             "title": "Education DAO",
             "description": "This is a brief description. This is a brief description.This is a brief description.This is a brief description."
-        }
+        },
+        "isWinner": false
     }
 ]

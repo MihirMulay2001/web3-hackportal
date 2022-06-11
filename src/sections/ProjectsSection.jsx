@@ -21,7 +21,11 @@ export default function ProjectsSection({ hackId }) {
     <>
       {show && (
         <ModalSection handleToggle={handleToggle}>
-          <ProjectInfo projectId={projectId} handleToggle={handleToggle} />
+          <ProjectInfo
+            projectId={projectId}
+            handleToggle={handleToggle}
+            vote={true}
+          />
         </ModalSection>
       )}
       <div className={styles.heading}>

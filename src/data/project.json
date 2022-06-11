@@ -1,9 +1,9 @@
 {
     "id": "0928b3298",
     "name": "Web3 DAO",
-    "description": "Description",
+    "description": "Description. Pariatur commodo mollit ullamco ullamco. Esse eiusmod qui excepteur tempor laboris proident sint qui do. Est sit consequat enim eu consectetur laboris adipisicing amet ut mollit enim labore laboris. Aliquip officia eiusmod nulla sunt id dolore deserunt commodo reprehenderit adipisicing. Voluptate cillum id sint ad incididunt aliqua ex incididunt id reprehenderit quis quis.",
     "github": "https://www.github.com",
-    "etherscan": "",
+    "etherscan": "https://www.google.com",
     "personType": "judge",
     "youtube": "",
     "sreenshots": [
@@ -12,8 +12,8 @@
         ""
     ],
     "tracks": [
-        "1st Place",
-        "2nd Place",
-        "3rd Place"
+        "1st_Place",
+        "2nd_Place",
+        "3rd_Place"
     ]
 }

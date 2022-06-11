@@ -3,7 +3,7 @@ import useFetcher from "../hooks/useFetcher";
 import data from "../data/project.json";
 import styles from "../styles/projectinfo.module.css";
 
-export default function ProjectInfo({ projectId, handleToggle }) {
+export default function ProjectInfo({ projectId, handleToggle, vote }) {
   // const {loading, data} = useFetcher()
   const [voteTrack, setVoteTrack] = useState(null);
 
@@ -18,10 +18,11 @@ export default function ProjectInfo({ projectId, handleToggle }) {
       <h3>{data.name}</h3>
       <div className={styles.desc}>{data.description}</div>
       <div>
-        icon <a href={data.github}>{data.github}</a>{" "}
+        <i class="fab fa-github"></i> <a href={data.github}>{data.github}</a>{" "}
       </div>
       <div>
-        icon <a href={data.etherscan}>{data.etherscan}</a>
+        <i class="fas fa-globe"></i>
+        <a href={data.etherscan}>{data.etherscan}</a>
       </div>
       <iframe
         src={data.youtube}
@@ -29,26 +30,28 @@ export default function ProjectInfo({ projectId, handleToggle }) {
         height="300px"
         width="500px"
       />
-      {data.personType === "judge" && (
-        <div>
-          {data.tracks.map((track, key) => (
-            <span key={key}>
-              <label>
-                <input
-                  type="radio"
-                  id={track}
-                  name="track"
-                  value={track}
-                  onChange={handleChange}
-                  checked={voteTrack === track}
-                />
-                {track}
-              </label>
-            </span>
-          ))}
-        </div>
+
+      {vote && (
+        <>
+          {data.personType === "judge" && (
+            <div className={styles.radio}>
+              {data.tracks.map((track, key) => (
+                <span key={key}>
+                  <label>{track}</label>
+                  <input
+                    type="radio"
+                    name="track"
+                    value={track}
+                    onChange={handleChange}
+                    checked={voteTrack === track}
+                  />
+                </span>
+              ))}
+            </div>
+          )}
+          <button>Vote</button>
+        </>
       )}
-      <button>Vote</button>
     </div>
   );
 }

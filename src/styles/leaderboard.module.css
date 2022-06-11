@@ -1,0 +1,28 @@
+.container {
+    padding: 0 10vw;
+}
+
+.container>h3 {
+    font-size: 23px;
+
+}
+
+.track {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.section {
+    margin: 10vh 0;
+}
+
+.project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    flex-grow: 1;
+    padding-left: 5vw;
+}
