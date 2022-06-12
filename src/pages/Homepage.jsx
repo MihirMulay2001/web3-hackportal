@@ -19,20 +19,20 @@ export default function Homepage({ account }) {
         <div className={styles.heading}>
           <h1>Hackportal</h1>
           <h3>A decentralized transparent hackathon system</h3>
-          <div>
-            <div>
+          <div className={styles.hacklinks}>
+            <div className={styles.createhack}>
               <Link to="/createhack">Create Hackathon</Link>
             </div>
-            <div>
-              <Link to={`/hackathon:${hackId}`}> Join Hackathon </Link>
+            <div className={styles.joinhack}>
               <input
                 type="text"
-                placeholder="HSKHFH"
+                placeholder="Enter code"
                 value={hackId}
                 onChange={(e) => {
                   setHackId(e.target.value);
                 }}
               />
+              <Link to={`/hackathon:${hackId}`}> Join Hackathon </Link>
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@ export default function Homepage({ account }) {
       </div>
 
       <hr />
-      <div>
+      <div className={styles.aboutus}>
         <h1>How it works</h1>
         <div>
           <div>Web3 focused</div>
@@ -50,8 +50,8 @@ export default function Homepage({ account }) {
           <div>Fair rewards distribution</div>
         </div>
       </div>
-      <footer>
-        <div>
+      <footer className={styles.footer}>
+        <div className={styles.contrilinks}>
           <div className={styles.contributor}>
             <h5>Contributors</h5>
             <div>names here</div>

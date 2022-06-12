@@ -3,4 +3,10 @@
   --light-purple: #EOAAFF;
   --black: #272727;
   --white: #f7f7f7;
+  font-size: 19px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

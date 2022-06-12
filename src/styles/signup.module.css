@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container>div {
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login {
+    background-color: var(--dark-purple);
+}
+
+.login>button,
+.signup>button {
+    border: none;
+    background-color: var(--white);
+    border-radius: 5px;
+    font-size: 19px;
+    padding: 8px 15px;
+    margin: 10px 0;
+}
+
+.login>button:hover,
+.signup>button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.signup>input {
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px grey solid;
+    margin: 10px 0;
+    font-size: 17px;
+}

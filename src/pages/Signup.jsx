@@ -49,14 +49,19 @@ export default function Signup({ account, setAccount }) {
         <button onClick={(e) => connectWalletHandler(setAccount)}>
           {account ? "Wallet connected" : "Connect wallet"}
         </button>
+        <button>Connect Google</button>
       </div>
       <div className={styles.signup}>
         <h3>Sign Up</h3>
         <input type="text" placeholder="mihir" />
         <input type="email" placeholder="mihir@gmail.com" />
-        <button onClick={(e) => connectWalletHandler(setAccount, setFlag)}>
-          {account ? "Wallet connected" : "Connect wallet"}
-        </button>
+        {account ? (
+          <button>Wallet connected</button>
+        ) : (
+          <button onClick={(e) => connectWalletHandler(setAccount, setFlag)}>
+            Connect wallet
+          </button>
+        )}
         {flag ? <button onClick={handleSubmit}>Log In</button> : <SendData />}
       </div>
     </div>
