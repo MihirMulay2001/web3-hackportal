@@ -21,7 +21,7 @@ export default function Hackathon() {
         <HackathonHeader hackData={hackData} />
       </div>
       {hackData.hacktimeout ? (
-        hackData.votetimeout ? (
+        1 ? (
           <LeaderboardSection />
         ) : (
           <ProjectsSection hackId={hackId} />

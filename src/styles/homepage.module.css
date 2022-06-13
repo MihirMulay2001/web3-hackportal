@@ -68,6 +68,7 @@
     width: 300px;
 }
 
+
 .aboutus>div {
     display: flex;
     justify-content: space-around;
@@ -76,6 +77,11 @@
 }
 
 .aboutus>div>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
     width: 250px;
     height: 400px;
     box-shadow: 4px 4px 11px 1px rgba(0, 0, 0, 0.25);

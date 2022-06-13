@@ -29,7 +29,6 @@ export default function ProjectsSection({ hackId }) {
         </ModalSection>
       )}
       <div className={styles.heading}>
-        <div className={styles.h3}>All Projects</div>
         <div className={styles.persontype}>You are a judge</div>
       </div>
       <div className={styles.container}>
