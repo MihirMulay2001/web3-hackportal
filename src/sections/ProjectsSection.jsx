@@ -6,6 +6,7 @@ import ProjectInfo from "../components/ProjectInfo";
 import ModalSection from "./ModalSection";
 import styles from "../styles/projectssection.module.css";
 import axios from 'axios';
+import hackData from "../data/data.json";
 
 export default function ProjectsSection({ link, hackId }) {
   const [show, setShow] = useState(false);
@@ -42,13 +43,36 @@ export default function ProjectsSection({ link, hackId }) {
         <div className={styles.persontype}>You are a judge</div>
       </div>
       <div className={styles.container}>
-        {allsubmissions.map((project, key) => (
-          <ProjectCard
-            project={project}
-            key={key}
-            handleToggle={handleToggle}
-          />
-        ))}
+        <div className={styles.container}>
+          {hackData.projects.map((project, key) => (
+            <ProjectCard
+              project={project}
+              key={key}
+              handleToggle={handleToggle}
+            />
+          ))}
+        </div>
+        {/* {allsubmissions === [] ?
+
+          hackData.map((project, key) => (
+            <ProjectCard
+              project={project}
+              key={key}
+              handleToggle={handleToggle}
+            />
+          ))
+
+          :
+
+          allsubmissions.map((project, key) => (
+            <ProjectCard
+              project={project}
+              key={key}
+              handleToggle={handleToggle}
+            />
+          ))
+        } */}
+
       </div>
     </>
   );
