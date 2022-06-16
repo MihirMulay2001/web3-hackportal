@@ -1,0 +1,39 @@
+{
+    "name": "Mihir Mulay",
+    "bio": "my bio",
+    "image": "",
+    "walletAddress": "0x4720C905840383E93ed84A7ECCe181B76c9a62E1",
+    "portfolio": "https://www.mihirmulay.me",
+    "ongoingHackathons": [
+        {
+            "id": "kmdw283913node",
+            "code": "SERFDS",
+            "image": "",
+            "isOrganizer": false,
+            "desc": "hack short description here"
+        },
+        {
+            "id": "kmdw283913node",
+            "code": "SERFDS",
+            "image": "",
+            "isOrganizer": true,
+            "desc": "hack short description here"
+        }
+    ],
+    "pastHackathons": [
+        {
+            "id": "kmdw283913node",
+            "code": "SERFDS",
+            "image": "",
+            "isOrganizer": false,
+            "desc": "hack short description here"
+        },
+        {
+            "id": "kmdw283913node",
+            "code": "SERFDS",
+            "image": "",
+            "isOrganizer": true,
+            "desc": "hack short description here"
+        }
+    ]
+}
