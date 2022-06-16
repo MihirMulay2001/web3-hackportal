@@ -2,7 +2,10 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Router from "./Router";
 import { ethers } from "ethers";
-import ContractJson from "./assets/abi/Factory.json";
+import ContractJson from "./assets/abi/contract.json";
+import axios from "axios";
+
+const link = "http://localhost:5000";
 
 const CONTRACT_ADDRESS = "0x95574ff0d2F8347b919d7a9687632b86D8760e68";
 
@@ -41,15 +44,22 @@ function App() {
     }
   };
 
-  function onAccountChange(accounts) {
+  async function onAccountChange(accounts) {
     setAccount(accounts[0]);
-    console.log(accounts[0]);
+    console.log("Voila! connected " + accounts[0]);
+    localStorage.setItem("curr_wallet_id", accounts[0]);
+    await axios
+      .post(link + "/user/newuser", {
+        user_wallet_id: accounts[0],
+      })
+      .then((r) => console.log(r));
   }
 
   useEffect(() => {
     if (checkWalletIsConnected()) {
-      getContract();
+      // getContract()
       console.log("wallet connected");
+      console.log("Still! connected " + localStorage.getItem("curr_wallet_id"));
     }
     window.ethereum.on("accountsChanged", onAccountChange);
     // return(()=>{
@@ -59,7 +69,12 @@ function App() {
 
   return (
     <div className="App">
-      <Router account={account} contract={contract} setAccount={setAccount} />
+      <Router
+        link={link}
+        account={account}
+        contract={contract}
+        setAccount={setAccount}
+      />
     </div>
   );
 }

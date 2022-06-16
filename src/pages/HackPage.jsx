@@ -20,9 +20,15 @@ import ProjectsSection from "../sections/ProjectsSection";
 import LeaderboardSection from "../sections/LeaderboardSection";
 import hackData from "../data/data.json";
 
+import { Link, useParams } from "react-router-dom";
+
 import GavelIcon from "@mui/icons-material/Gavel";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import StarsIcon from "@mui/icons-material/Stars";
+
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -88,7 +94,7 @@ function cleanlink(link) {
   return cleanlink;
 }
 
-function HackPage() {
+function HackPage({ account, link }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -111,6 +117,59 @@ function HackPage() {
   const [teammates_wallet_ids, setTeammates_wallet_ids] = useState([]);
 
   const [cmts, setCmts] = useState(["Boob", "AssDick"]);
+
+  const { hack_id } = useParams();
+
+  const getlinkfromimg = async (img) => {
+    var thelink;
+    const data = new FormData();
+    data.append("filetos3", img);
+    await axios.post(link + "/filetos3", data).then((r) => {
+      console.log(r.data);
+      thelink = r.data;
+    });
+    return thelink;
+  };
+
+  const doSubmit = async () => {
+    if (
+      (await axios.get(link + "/event/getsubmissioninfo", {
+        event_id: hack_id,
+        team_leader_wallet_id: teamlead_wallet_id,
+      })) === {}
+    ) {
+      await axios
+        .post(link + "/user/addsubmission", {
+          event_id: hack_id,
+          team_name: teamname,
+          team_leader_wallet_id: teamlead_wallet_id,
+          teammates_wallet_ids: teammates_wallet_ids,
+          team_logo: getlinkfromimg(teamlogo),
+          proj_name: projname,
+          proj_disc: projdisc,
+          live_link: livelink,
+          repo_link: repolink,
+          video_link: livelink,
+        })
+        .then((r) => {
+          console.log(r);
+        });
+    } else {
+      await axios
+        .patch(link + "/user/updatesubmission", {
+          team_logo: getlinkfromimg(teamlogo),
+          proj_name: projname,
+          proj_disc: projdisc,
+          live_link: livelink,
+          repo_link: repolink,
+          video_link: livelink,
+        })
+        .then((r) => {
+          console.log(r);
+        });
+    }
+  };
+
   return (
     <div className="hackpgwrapper">
       <HackHeader
@@ -210,6 +269,18 @@ function HackPage() {
           "Greetings from BITS Blockchain Club, BITS Pilani! We are a group of web3 enthusiasts and buidlers and are organizing the inaugural edition of our flagship event, Web3 Week, and as part of the event, will be hosting a hackathon for all the budding developers who are already building or want to start building with web3. This is an exciting opportunity for those who have been exploring web3 to get hands-on, practical coding experience in the ecosystem by ‘buidling’ out a project. We have partnered with LearnWeb3DAO for technical workshops for those who are just starting out with web3 and want to explore it more by participating in the hackathon, along with partners like Arcana, Biconomy and Celo, who will be sponsoring bounties for projects using their technology stack. So, buidlers, what are you waiting for? Register for the hackathon, rack your brains on cutting edge problems and buidl something cool!"
         }
       />
+      <div style={{ width: "97%", marginTop: "10px" }}>
+        <Link
+          style={{
+            display: "flex",
+            aligItems: "center",
+            justifyContent: "end",
+          }}
+          to={"/"}
+        >
+          Back to home <ExitToAppIcon />
+        </Link>
+      </div>
       <Box sx={{ width: "100%", marginTop: "15px" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -472,7 +543,9 @@ function HackPage() {
               </Accordion>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <div className="submitbtn">Sumbit</div>
+              <div className="submitbtn" onClick={doSubmit}>
+                Sumbit
+              </div>
             </div>
           </div>
         </TabPanel>

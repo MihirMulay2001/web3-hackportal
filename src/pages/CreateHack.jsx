@@ -11,6 +11,9 @@ import Box from '@mui/material/Box';
 import ChipInput from 'material-ui-chip-input'
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Link } from "react-router-dom";
+
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -25,11 +28,30 @@ const style = {
     color: "white"
 };
 
-function CreateHack() {
+const codestyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    height: 100,
+    width: 400,
+    bgcolor: '#9254C8',
+    boxShadow: 24,
+    p: 4,
+    color: "white"
+};
+
+function CreateHack({ account, link }) {
+
+    const [hackcode, setHackcode] = useState("");
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [created, setCreated] = React.useState();
+    const handlecreateOpen = () => setCreated(true);
+    const handlecreateClose = () => setCreated(false);
 
     const [clicked, setClicked] = useState(false);
     const [hackimgadded, setHackimgadded] = useState(false);
@@ -50,14 +72,116 @@ function CreateHack() {
     const stepthreeball = useRef();
     const [step, setStep] = useState(1);
 
-    const nextstep = (step) => {
+    const getlinkfromimg = async (img) => {
+        var thelink;
+        const data = new FormData();
+        data.append('filetos3', img);
+        await axios.post(link + '/filetos3', data).then((r) => { console.log(r.data); thelink = r.data; setHackimg(r.data) });
+        return thelink;
+    }
+
+
+    const getlinkfromhackimg = async (img) => {
+        var thelink;
+        const data = new FormData();
+        data.append('filetos3', img);
+        await axios.post(link + '/filetos3', data).then((r) => { console.log(r.data); thelink = r.data; setHackimg(r.data) });
+        return thelink;
+    }
+
+
+    const getlinkfromjudgeimg = async (img, i) => {
+        var thelink;
+        var updatedjudgelist = judgelist;
+        const data = new FormData();
+        data.append('filetos3', img);
+        await axios.post(link + '/filetos3', data).then((r) => {
+            console.log(r.data); thelink = r.data;
+            updatedjudgelist[i].pic = r.data;
+            setJudgelist(updatedjudgelist);
+        });
+        return thelink;
+    }
+
+
+    const getlinkfromprizeimg = async (img, i) => {
+        var thelink;
+        var updatedprizelist = prizelist;
+        const data = new FormData();
+        data.append('filetos3', img);
+        await axios.post(link + '/filetos3', data).then((r) => {
+            console.log(r.data); thelink = r.data;
+            console.log(updatedprizelist);
+            updatedprizelist[i].pic = r.data;
+            setPrizelist(updatedprizelist);
+        });
+        return thelink;
+    }
+
+    const nextstep = async (step) => {
         if (step < 3) {
             setStep(step + 1);
             fillform.current.style.transform = `translateX(${fillform.current.getBoundingClientRect().x - document.documentElement.clientWidth}px)`;
         }
 
         if (step === 3) {
-            // code for backend
+            // 1. get links for all images 
+            setHackimg(getlinkfromimg(hackimg));
+            let judgelistwithlinks = judgelist;
+            for (let elem of judgelistwithlinks) {
+                elem.pic = getlinkfromimg(elem.pic);
+            }
+            setJudgelist(judgelistwithlinks);
+            let prizelistwithlinks = prizelist;
+            for (let elem of prizelistwithlinks) {
+                elem.pic = getlinkfromimg(elem.pic);
+            }
+            setPrizelist(prizelistwithlinks);
+
+            // 2. create hack
+            let judge_coin_holders = judgelist.map((i) => {
+                return i.wallet_id;
+            })
+
+            let competitor_coin_holders = teams.map((i) => {
+                return i
+            })
+
+            try {
+                axios.post(link + '/event/create', {
+                    organizer_wallet_id: orgwalletid,
+                    event_name: hackname,
+                    event_logo: hackimg,
+                    event_link: websitelink,
+                    event_disc: hackdisc,
+                    prizes: prizelist,
+                    judges: judgelist,
+                    submission_date: submissiondate,
+                    end_date: hackenddate,
+                    teams: teams,
+                    judge_coin_holders: judge_coin_holders,
+                    competitor_coin_holders: competitor_coin_holders,
+                }).then((r) => { console.log(r); setHackcode(r.data._id) });
+            }
+            catch (err) {
+                console.log(err)
+
+            }
+
+            console.log(account + ' ' + hackname + ' ' + hackimg + ' ' + websitelink + ' ' + hackdisc + ' ');
+            judgelist.map((i) => {
+                console.log(i);
+            })
+            prizelist.map((i) => {
+                console.log(i);
+            })
+            console.log(submissiondate);
+            console.log(hackenddate);
+            teams.map((i) => {
+                console.log(i);
+            })
+
+            handlecreateOpen();
         }
     }
 
@@ -86,14 +210,11 @@ function CreateHack() {
         }
     }, [step]);
 
-    useEffect(() => {
-
-    }, [])
-
     return (
         <div className="wrapper">
             <div className="steps">
-                <div style={{ height: "60%", width: "100%", display: "flex", justifyContent: "space-between" }}><h2 style={{ marginTop: "10px", paddingLeft: "15px", paddingBottom: "12px", textAlign: "left", color: "#fff" }}>Create A Hackthon In 3 Simple Steps</h2> <ClearIcon id='addbtn' sx={{ marginTop: "10px", paddingRight: "15px", paddingBottom: "12px", color: "white" }} onClick={() => { /*redirect back*/ }} /></div>
+                <Link id='backtohome' to={'/'} style={{ display: "none" }} />
+                <div style={{ height: "60%", width: "100%", display: "flex", justifyContent: "space-between" }}><h2 style={{ marginTop: "10px", paddingLeft: "15px", paddingBottom: "12px", textAlign: "left", color: "#fff" }}>Create A Hackthon In 3 Simple Steps</h2> <ClearIcon id='addbtn' sx={{ marginTop: "10px", paddingRight: "15px", paddingBottom: "12px", color: "white" }} onClick={() => { document.getElementById('backtohome').click() }} /></div>
                 <div className="strip">
                     <div className="ball" ref={steponeball}>1</div>
                     <div className="ball" ref={steptwoball}>2</div>
@@ -130,8 +251,8 @@ function CreateHack() {
                                 alignItems: "center",
                             }} >
                                 <h4 style={{ marginTop: 0, display: (hackimgadded ? "none" : "") }}>Click below to an image for the hackathon</h4>
-                                <input id='inputhackimg' type={"file"} style={{ display: "none" }} onChange={(e) => { setHackimgadded(true); setHackimg(e.target.files[0]); }} />
-                                {hackimgadded ? <img src={URL.createObjectURL(hackimg)} height={250} width={250} /> : <AddPhotoAlternateIcon id="addhackimg" sx={{ transform: "scale(8)", marginTop: "100px" }} onClick={() => { document.getElementById("inputhackimg").click(); }} />}
+                                <input id='inputhackimg' type={"file"} style={{ display: "none" }} onChange={(e) => { setHackimgadded(true); getlinkfromhackimg(e.target.files[0]); }} />
+                                {hackimgadded ? <img src={hackimg} height={250} width={250} /> : <AddPhotoAlternateIcon id="addhackimg" sx={{ transform: "scale(8)", marginTop: "100px" }} onClick={() => { document.getElementById("inputhackimg").click(); }} />}
                             </div>
                             <TextField label={"Hackthon website link"} sx={{ width: "50%", marginTop: "8%" }} onChange={(e) => { setWebsitelink(e.target.value) }} />
                             <div className="paybtn" onClick={handleOpen}>
@@ -169,8 +290,8 @@ function CreateHack() {
                             {judgelist.map((judge) => {
                                 return (
                                     <div className="detailscard">
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'space-evenly', height: "100px" }}>{judge.pic ? <img src={URL.createObjectURL(judge.pic)} height={85} width={85} style={{ borderRadius: "100%" }} /> : <AccountCircleIcon id="addbtn" sx={{ transform: "scale(4)", marginBottom: "15px", paddingTop: "5px" }} onClick={() => { document.getElementById("judgeimg-" + judgelist.indexOf(judge)).click(); }} />}</div>
-                                        <input id={"judgeimg-" + judgelist.indexOf(judge)} type={"file"} style={{ display: "none" }} onChange={(e) => { judge.pic = e.target.files[0]; setClicked(!clicked); }} />
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'space-evenly', height: "100px" }}>{judge.pic ? <img src={judge.pic} height={85} width={85} style={{ borderRadius: "100%" }} /> : <AccountCircleIcon id="addbtn" sx={{ transform: "scale(4)", marginBottom: "15px", paddingTop: "5px" }} onClick={() => { document.getElementById("judgeimg-" + judgelist.indexOf(judge)).click(); }} />}</div>
+                                        <input id={"judgeimg-" + judgelist.indexOf(judge)} type={"file"} style={{ display: "none" }} onChange={(e) => { getlinkfromjudgeimg(e.target.files[0], judgelist.indexOf(judge)); setClicked(!clicked); }} />
                                         <TextField label={"Name"} sx={{ width: "90%" }} variant="filled" onChange={(e) => { judge.name = e.target.value; }} />
                                         <TextField label={"Title"} sx={{ width: "90%" }} variant="filled" onChange={(e) => { judge.title = e.target.value; }} />
                                         <TextField label={"Email"} sx={{ width: "90%" }} variant="filled" onChange={(e) => { judge.email = e.target.value; }} />
@@ -190,8 +311,8 @@ function CreateHack() {
                             {prizelist.map((prize) => {
                                 return (
                                     <div className="detailscard">
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'space-evenly', height: "100px" }}>{prize.pic ? <img src={URL.createObjectURL(prize.pic)} height={85} width={85} style={{ borderRadius: "100%" }} /> : <EmojiEventsIcon id="addbtn" sx={{ transform: "scale(4)", marginBottom: "15px", paddingTop: "5px" }} onClick={() => { document.getElementById("prizeimg-" + prizelist.indexOf(prize)).click(); }} />}</div>
-                                        <input id={"prizeimg-" + prizelist.indexOf(prize)} type={"file"} style={{ display: "none" }} onChange={(e) => { prize.pic = e.target.files[0]; setClicked(!clicked); }} />
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'space-evenly', height: "100px" }}>{prize.pic ? <img src={prize.pic} height={85} width={85} style={{ borderRadius: "100%" }} /> : <EmojiEventsIcon id="addbtn" sx={{ transform: "scale(4)", marginBottom: "15px", paddingTop: "5px" }} onClick={() => { document.getElementById("prizeimg-" + prizelist.indexOf(prize)).click(); }} />}</div>
+                                        <input id={"prizeimg-" + prizelist.indexOf(prize)} type={"file"} style={{ display: "none" }} onChange={(e) => { prize.pic = getlinkfromprizeimg(e.target.files[0], prizelist.indexOf(prize)); setClicked(!clicked); }} />
                                         <TextField label={"Name"} sx={{ width: "90%" }} variant="filled" />
                                         <TextField label={"Track"} sx={{ width: "90%" }} variant="filled" />
                                         <TextField label={"Amount"} sx={{ width: "90%" }} variant="filled" />
@@ -209,6 +330,21 @@ function CreateHack() {
             <div className="footer">
                 <div className='btn' onClick={() => { prevstep(step) }}>Prev</div>
                 <div className='btn' onClick={() => { nextstep(step) }}>Next</div>
+                <Modal
+                    open={created}
+                    onClose={handlecreateClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={codestyle} >
+                        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ marginBottom: "10px" }}>
+                            The Hack Code Is
+                        </Typography>
+                        <Typography id="modal-modal-title" variant="h4" component="h1" sx={{ marginBottom: "10px" }}>
+                            {hackcode}
+                        </Typography>
+                    </Box>
+                </Modal>
             </div>
         </div >
     )
