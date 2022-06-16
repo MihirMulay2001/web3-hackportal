@@ -23,6 +23,26 @@ import styles from "../styles/homepage.module.css";
 
 import axios from 'axios';
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+import { GoogleLogin } from 'react-google-login';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  height: 50,
+  width: 300,
+  bgcolor: '#fff',
+  boxShadow: 24,
+  p: 4,
+  color: "black",
+  display: "flex",
+  justifyContent: "center"
+};
 
 const connectWalletHandler = async (setCurrentAccount, setFlag) => {
   const { ethereum } = window;
@@ -62,21 +82,47 @@ export default function Homepage({ link, account, setAccount }) {
 
   const joinHack = async (x) => {
     setHackId(x);
+    localStorage.setItem('curr_hack_id', x);
     await axios.post(link + '/user/joinevent', {
-      user_wallet_id: account,
+      user_wallet_id: localStorage.getItem('curr_wallet_id'),
       event_id: x
-    })
+    }).then(r => console.log(r));
   }
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
 
   return (
     <div className={styles.container} style={{ backgroundImage: `url(${bg})` }}>
-      <nav>
+      <nav style={{ display: "flex", justifyContent: "space-between" }}>
         <div className="paybtn" style={{ margin: 0 }} onClick={(e) => connectWalletHandler(setAccount)}>
           {account ? (
             <div> Connected</div>
           ) : <div> Connect</div>}
         </div>
+        <div className="paybtn" style={{ backgroundColor: "black", margin: 0, paddingLeft: "18px", paddingRight: "18px" }} onClick={() => { setOpen(true) }}>LogIn/SignUp</div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <GoogleLogin
+              clientId="838323324333-bv402hvqsqmk08lr7ot3ejfv72hiale5.apps.googleusercontent.com"
+              buttonText="Countiue with Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+              style={{ width: "95%" }}
+            />
+          </Box>
+        </Modal>
       </nav>
       <div className={styles.header} >
         <div className={styles.heading}>

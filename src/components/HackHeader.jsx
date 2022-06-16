@@ -15,14 +15,14 @@ function HackHeader({ hackname, hackdisc, hackimg, judgelist }) {
                     <div className="judgelist">
                         {judgelist.map(judge => {
                             return (
-                                <Profile key={judge.judge_wallet_id} name={judge.name} title={judge.title} imglink={judge.imglink} email={judge.email} linkedin={judge.linkedin} />
+                                <Profile key={judge.wallet_id} name={judge.name} title={judge.title} imglink={judge.pic} email={judge.email} linkedin={judge.linkedin} />
                             )
                         })}
                     </div>
                 </div>
             </div>
             <div className='rightthalf'>
-                <img id='hackimg' src={hackimg} />
+                <img id='hackimg' src={hackimg} height={250} width={250} />
             </div>
         </div>
     )

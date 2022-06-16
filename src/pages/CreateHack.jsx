@@ -55,6 +55,9 @@ function CreateHack({ account, link }) {
 
     const [clicked, setClicked] = useState(false);
     const [hackimgadded, setHackimgadded] = useState(false);
+    const [judgeimgadded, setJudgeimgadded] = useState(false);
+    const [prizeimgadded, setPrizeimgadded] = useState(false);
+
     const [hackimg, setHackimg] = useState();
     const [hackname, setHackname] = useState();
     const [orgwalletid, setOrgwalletid] = useState();
@@ -100,6 +103,7 @@ function CreateHack({ account, link }) {
             updatedjudgelist[i].pic = r.data;
             setJudgelist(updatedjudgelist);
         });
+        setJudgeimgadded(!judgeimgadded);
         return thelink;
     }
 
@@ -115,6 +119,7 @@ function CreateHack({ account, link }) {
             updatedprizelist[i].pic = r.data;
             setPrizelist(updatedprizelist);
         });
+        setPrizeimgadded(!prizeimgadded);
         return thelink;
     }
 
@@ -125,19 +130,6 @@ function CreateHack({ account, link }) {
         }
 
         if (step === 3) {
-            // 1. get links for all images 
-            setHackimg(getlinkfromimg(hackimg));
-            let judgelistwithlinks = judgelist;
-            for (let elem of judgelistwithlinks) {
-                elem.pic = getlinkfromimg(elem.pic);
-            }
-            setJudgelist(judgelistwithlinks);
-            let prizelistwithlinks = prizelist;
-            for (let elem of prizelistwithlinks) {
-                elem.pic = getlinkfromimg(elem.pic);
-            }
-            setPrizelist(prizelistwithlinks);
-
             // 2. create hack
             let judge_coin_holders = judgelist.map((i) => {
                 return i.wallet_id;
@@ -312,10 +304,10 @@ function CreateHack({ account, link }) {
                                 return (
                                     <div className="detailscard">
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'space-evenly', height: "100px" }}>{prize.pic ? <img src={prize.pic} height={85} width={85} style={{ borderRadius: "100%" }} /> : <EmojiEventsIcon id="addbtn" sx={{ transform: "scale(4)", marginBottom: "15px", paddingTop: "5px" }} onClick={() => { document.getElementById("prizeimg-" + prizelist.indexOf(prize)).click(); }} />}</div>
-                                        <input id={"prizeimg-" + prizelist.indexOf(prize)} type={"file"} style={{ display: "none" }} onChange={(e) => { prize.pic = getlinkfromprizeimg(e.target.files[0], prizelist.indexOf(prize)); setClicked(!clicked); }} />
-                                        <TextField label={"Name"} sx={{ width: "90%" }} variant="filled" />
-                                        <TextField label={"Track"} sx={{ width: "90%" }} variant="filled" />
-                                        <TextField label={"Amount"} sx={{ width: "90%" }} variant="filled" />
+                                        <input id={"prizeimg-" + prizelist.indexOf(prize)} type={"file"} style={{ display: "none" }} onChange={(e) => { getlinkfromprizeimg(e.target.files[0], prizelist.indexOf(prize)); setClicked(!clicked); }} />
+                                        <TextField label={"Name"} sx={{ width: "90%" }} variant="filled" onChange={(e) => { prize.name = e.target.value; }} />
+                                        <TextField label={"Track"} sx={{ width: "90%" }} variant="filled" onChange={(e) => { prize.track = e.target.value; }} />
+                                        <TextField label={"Amount"} sx={{ width: "90%" }} variant="filled" onChange={(e) => { prize.amount = e.target.value; }} />
                                         <div className="paybtn">PAY NOW</div>
                                     </div>
                                 )

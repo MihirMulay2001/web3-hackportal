@@ -15,10 +15,9 @@ import { useState } from 'react';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import ChipInput from 'material-ui-chip-input'
 import Modal from '@mui/material/Modal';
-
+import hackData from "../data/data.json";
 import ProjectsSection from "../sections/ProjectsSection";
 import LeaderboardSection from "../sections/LeaderboardSection";
-import hackData from "../data/data.json";
 
 import { Link, useParams } from "react-router-dom";
 
@@ -30,6 +29,7 @@ import StarsIcon from '@mui/icons-material/Stars';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import axios from 'axios';
+import { useEffect } from 'react';
 
 
 const style = {
@@ -99,6 +99,8 @@ function cleanlink(link) {
 
 function HackPage({ account, link }) {
 
+    const [hackdata, setHackdata] = useState({});
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -163,23 +165,22 @@ function HackPage({ account, link }) {
 
     }
 
+    useEffect(() => {
+        const grabdata = async () => {
+            await axios.get(link + '/event/info/' + localStorage.getItem('curr_hack_id')).then(r => { console.log(r.data.judges); setHackdata(r.data); })
+        }
+        grabdata();
+    }, []);
+
     return (
         <div className="hackpgwrapper">
+            {hackdata ?
+                <HackHeader
+                    hackname={hackdata.event_name}
+                    hackimg={hackdata.event_logo}
+                    judgelist={hackdata.judges}
+                    hackdisc={hackdata.event_disc} /> : <></>}
 
-            <HackHeader
-                hackname={"Web3 Hack By BITS"}
-                hackimg={"https://srmap.edu.in/file/2019/02/HackSRM.jpg?x51277"}
-                judgelist={[{ "imglink": "https://www.macworld.com/wp-content/uploads/2021/10/steve-jobs-2-1.jpg?quality=50&strip=all", "name": "Steve Jobs", "title": "CEO of Apple", "email": "jobs@apple.com", "linkedin": "Steve Jobs" },
-                { "imglink": "https://assets.entrepreneur.com/content/3x2/2000/1652298519-GettyImages-13276855511.jpg", "name": "Mark Zuck", "title": "CEO of Meta", "email": "mark@meta.com", "linkedin": "Mark Zuck" },
-                { "imglink": "https://d.newsweek.com/en/full/1548436/rick-morty-elon-tusk.jpg?w=1600&h=1600&l=55&t=21&q=88&f=8ee9ccf4be0bcb709cc54809d1722cd7", "name": "Elon Tusk", "title": "CEO of Tesla", "email": "elon@tesla.com", "linkedin": "Elon Tusk" },
-                { "imglink": "https://assets.entrepreneur.com/content/3x2/2000/1652298519-GettyImages-13276855511.jpg", "name": "Mark Zuck", "title": "CEO of Meta", "email": "mark@meta.com", "linkedin": "Mark Zuck" },
-                { "imglink": "https://d.newsweek.com/en/full/1548436/rick-morty-elon-tusk.jpg?w=1600&h=1600&l=55&t=21&q=88&f=8ee9ccf4be0bcb709cc54809d1722cd7", "name": "Elon Tusk", "title": "CEO of Tesla", "email": "elon@tesla.com", "linkedin": "Elon Tusk" },
-                { "imglink": "https://assets.entrepreneur.com/content/3x2/2000/1652298519-GettyImages-13276855511.jpg", "name": "Mark Zuck", "title": "CEO of Meta", "email": "mark@meta.com", "linkedin": "Mark Zuck" },
-                { "imglink": "https://d.newsweek.com/en/full/1548436/rick-morty-elon-tusk.jpg?w=1600&h=1600&l=55&t=21&q=88&f=8ee9ccf4be0bcb709cc54809d1722cd7", "name": "Elon Tusk", "title": "CEO of Tesla", "email": "elon@tesla.com", "linkedin": "Elon Tusk" },
-                { "imglink": "https://assets.entrepreneur.com/content/3x2/2000/1652298519-GettyImages-13276855511.jpg", "name": "Mark Zuck", "title": "CEO of Meta", "email": "mark@meta.com", "linkedin": "Mark Zuck" },
-                { "imglink": "https://d.newsweek.com/en/full/1548436/rick-morty-elon-tusk.jpg?w=1600&h=1600&l=55&t=21&q=88&f=8ee9ccf4be0bcb709cc54809d1722cd7", "name": "Elon Tusk", "title": "CEO of Tesla", "email": "elon@tesla.com", "linkedin": "Elon Tusk" }, { "imglink": "https://assets.entrepreneur.com/content/3x2/2000/1652298519-GettyImages-13276855511.jpg", "name": "Mark Zuck", "title": "CEO of Meta", "email": "mark@meta.com", "linkedin": "Mark Zuck" },
-                { "imglink": "https://d.newsweek.com/en/full/1548436/rick-morty-elon-tusk.jpg?w=1600&h=1600&l=55&t=21&q=88&f=8ee9ccf4be0bcb709cc54809d1722cd7", "name": "Elon Tusk", "title": "CEO of Tesla", "email": "elon@tesla.com", "linkedin": "Elon Tusk" }]}
-                hackdisc={"Greetings from BITS Blockchain Club, BITS Pilani! We are a group of web3 enthusiasts and buidlers and are organizing the inaugural edition of our flagship event, Web3 Week, and as part of the event, will be hosting a hackathon for all the budding developers who are already building or want to start building with web3. This is an exciting opportunity for those who have been exploring web3 to get hands-on, practical coding experience in the ecosystem by ‘buidling’ out a project. We have partnered with LearnWeb3DAO for technical workshops for those who are just starting out with web3 and want to explore it more by participating in the hackathon, along with partners like Arcana, Biconomy and Celo, who will be sponsoring bounties for projects using their technology stack. So, buidlers, what are you waiting for? Register for the hackathon, rack your brains on cutting edge problems and buidl something cool!"} />
             <div style={{ width: "97%", marginTop: "10px" }}>
                 <Link style={{ display: "flex", aligItems: "center", justifyContent: "end" }} to={"/"}>Back to home  <ExitToAppIcon /></Link>
             </div>
