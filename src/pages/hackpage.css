@@ -1,4 +1,4 @@
-.hackpgwrapper{
+.hackpgwrapper {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@
     padding-right: 5%;
 }
 
-.submitbtn{
+.submitbtn {
     height: 40px;
     width: 100px;
     background-color: #332FD0;
@@ -22,17 +22,17 @@
 }
 
 
-.submitbtn:hover{
+.submitbtn:hover {
     cursor: pointer;
 }
 
-.submitcard{
+.submitcard {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.submitleft{
+.submitleft {
     width: 50%;
     height: 350px;
     display: flex;
@@ -41,11 +41,11 @@
     justify-content: space-evenly;
 }
 
-.submitright{
+.submitright {
     width: 50%;
     height: 350px;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     justify-content: space-evenly;
 }

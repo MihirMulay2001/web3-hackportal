@@ -21,6 +21,9 @@ import LeaderboardSection from "../sections/LeaderboardSection";
 
 import { Link, useParams } from "react-router-dom";
 
+import GavelIcon from "@mui/icons-material/Gavel";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import StarsIcon from "@mui/icons-material/Stars";
 
 import GavelIcon from '@mui/icons-material/Gavel';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -31,20 +34,20 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import axios from 'axios';
 import { useEffect } from 'react';
 
+import axios from "axios";
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     height: 400,
     width: 400,
-    bgcolor: '#9254C8',
+    bgcolor: "#9254C8",
     boxShadow: 24,
     p: 4,
-    color: "white"
+    color: "white",
 };
-
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -75,7 +78,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
     };
 }
 
@@ -84,14 +87,14 @@ function cleanlink(link) {
     if (cleanlink.includes("youtu.be")) {
         cleanlink = cleanlink.replace("youtu.be", "www.youtube.com/embed");
     }
-    if (cleanlink.includes('watch?v=')) {
+    if (cleanlink.includes("watch?v=")) {
         cleanlink = cleanlink.replace("watch?v=", "embed/");
     }
-    if (cleanlink.includes('&')) {
-        cleanlink = cleanlink.slice(0, cleanlink.indexOf('&'));
+    if (cleanlink.includes("&")) {
+        cleanlink = cleanlink.slice(0, cleanlink.indexOf("&"));
     }
-    if (cleanlink.includes('?')) {
-        cleanlink = cleanlink.slice(0, cleanlink.indexOf('?'));
+    if (cleanlink.includes("?")) {
+        cleanlink = cleanlink.slice(0, cleanlink.indexOf("?"));
     }
     console.log(cleanlink);
     return cleanlink;
@@ -104,7 +107,6 @@ function HackPage({ account, link }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -129,41 +131,52 @@ function HackPage({ account, link }) {
     const getlinkfromimg = async (img) => {
         var thelink;
         const data = new FormData();
-        data.append('filetos3', img);
-        await axios.post(link + '/filetos3', data).then((r) => { console.log(r.data); thelink = r.data; });
+        data.append("filetos3", img);
+        await axios.post(link + "/filetos3", data).then((r) => {
+            console.log(r.data);
+            thelink = r.data;
+        });
         return thelink;
-    }
+    };
 
     const doSubmit = async () => {
-        if (await axios.get(link + '/event/getsubmissioninfo', {
-            event_id: hack_id,
-            team_leader_wallet_id: teamlead_wallet_id
-        }) === {}) {
-            await axios.post(link + '/user/addsubmission', {
+        if (
+            (await axios.get(link + "/event/getsubmissioninfo", {
                 event_id: hack_id,
-                team_name: teamname,
                 team_leader_wallet_id: teamlead_wallet_id,
-                teammates_wallet_ids: teammates_wallet_ids,
-                team_logo: getlinkfromimg(teamlogo),
-                proj_name: projname,
-                proj_disc: projdisc,
-                live_link: livelink,
-                repo_link: repolink,
-                video_link: livelink
-            }).then((r) => { console.log(r) });
+            })) === {}
+        ) {
+            await axios
+                .post(link + "/user/addsubmission", {
+                    event_id: hack_id,
+                    team_name: teamname,
+                    team_leader_wallet_id: teamlead_wallet_id,
+                    teammates_wallet_ids: teammates_wallet_ids,
+                    team_logo: getlinkfromimg(teamlogo),
+                    proj_name: projname,
+                    proj_disc: projdisc,
+                    live_link: livelink,
+                    repo_link: repolink,
+                    video_link: livelink,
+                })
+                .then((r) => {
+                    console.log(r);
+                });
+        } else {
+            await axios
+                .patch(link + "/user/updatesubmission", {
+                    team_logo: getlinkfromimg(teamlogo),
+                    proj_name: projname,
+                    proj_disc: projdisc,
+                    live_link: livelink,
+                    repo_link: repolink,
+                    video_link: livelink,
+                })
+                .then((r) => {
+                    console.log(r);
+                });
         }
-        else {
-            await axios.patch(link + '/user/updatesubmission', {
-                team_logo: getlinkfromimg(teamlogo),
-                proj_name: projname,
-                proj_disc: projdisc,
-                live_link: livelink,
-                repo_link: repolink,
-                video_link: livelink
-            }).then((r) => { console.log(r) });
-        }
-
-    }
+    };
 
     useEffect(() => {
         const grabdata = async () => {
@@ -308,11 +321,14 @@ function HackPage({ account, link }) {
                                 </AccordionDetails>
                             </Accordion>
                         </div>
+
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                            <div className="submitbtn" onClick={doSubmit}>Sumbit</div>
+                            <div className="submitbtn" onClick={doSubmit}>
+                                Sumbit
+                            </div>
                         </div>
-                    </div>
-                </TabPanel>
+                    </div >
+                </TabPanel >
                 <TabPanel value={value} index={1}>
                     {hackData.hacktimeout ? (
                         hackData.votetimeout ? (
@@ -324,9 +340,9 @@ function HackPage({ account, link }) {
                         <div> Wait until hackathon is over </div>
                     )}
                 </TabPanel>
-            </Box>
+            </Box >
         </div >
-    )
+    );
 }
 
-export default HackPage
+export default HackPage;
