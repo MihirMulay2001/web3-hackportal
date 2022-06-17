@@ -189,7 +189,7 @@ function HackPage({ account, link }) {
         <HackHeader
           hackname={hackdata.event_name}
           hackimg={hackdata.event_logo}
-          judgelist={hackdata.judges}
+          judgelist={hackdata.judges ? hackdata.judges : []}
           hackdisc={hackdata.event_disc}
         />
       ) : (

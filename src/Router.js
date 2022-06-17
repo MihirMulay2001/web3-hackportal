@@ -4,6 +4,7 @@ import Homepage from "./pages/Homepage";
 import CreateHack from "./pages/CreateHack";
 import HackPage from "./pages/HackPage";
 import Leaderboard from "./pages/Leaderboard";
+import Signup from "./pages/Signup";
 
 export default function Router({ link, setAccount, account, contract }) {
   return (
@@ -12,20 +13,41 @@ export default function Router({ link, setAccount, account, contract }) {
         <Route
           path="/"
           element={
-            <Homepage link={link} account={account} setAccount={setAccount} />
+            <Homepage
+              link={link}
+              account={account}
+              setAccount={setAccount}
+              contract={contract}
+            />
           }
         />
         <Route
           path="/createhack"
-          element={<CreateHack link={link} account={account} />}
+          element={
+            <CreateHack link={link} account={account} contract={contract} />
+          }
         />
         <Route
           path="/hackathon/:hackId"
-          element={<HackPage link={link} account={account} />}
+          element={
+            <HackPage link={link} account={account} contract={contract} />
+          }
         />
         <Route
           path="/leaderboard/:hackId"
-          element={<Leaderboard link={link} account={account} />}
+          element={
+            <Leaderboard link={link} account={account} contract={contract} />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Signup
+              account={account}
+              setAccount={setAccount}
+              contract={contract}
+            />
+          }
         />
       </Routes>
     </>

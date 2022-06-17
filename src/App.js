@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import ContractJson from "./assets/abi/contract.json";
 import axios from "axios";
 
-const link = "https://hackportalserver.herokuapp.com/";
+const link = "https://hackportalserver.herokuapp.com";
 
 const CONTRACT_ADDRESS = "0x95574ff0d2F8347b919d7a9687632b86D8760e68";
 
@@ -80,3 +80,27 @@ function App() {
 }
 
 export default App;
+
+/*
+
+{
+    "organizer_wallet_id": "0xE925b0Af68e203A80491089b2104D9Ca4d838a35",
+    "event_name": "hack 1",
+    "event_logo": "",
+    "event_link": "",
+    "event_disc": "description",
+    "prizes": [],
+    "judges": [],
+    "submission_date": "2022-06-17T18:24:46.839Z",
+    "end_date": "2022-06-17T18:24:46.839Z",
+    "teams": [],
+    "judge_coin_holders": [],
+    "competitor_coin_holders": []
+}
+*/
+
+//62acc796797ca650bc458d63
+
+//hack 2: 62acca6f797ca650bc458d7e
+
+//project id: 62accbf5797ca650bc458d88
