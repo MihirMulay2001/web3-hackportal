@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import ContractJson from "./assets/abi/contract.json";
 import axios from "axios";
 
-const link = "http://localhost:5000";
+const link = "https://hackportalserver.herokuapp.com/";
 
 const CONTRACT_ADDRESS = "0x95574ff0d2F8347b919d7a9687632b86D8760e68";
 
