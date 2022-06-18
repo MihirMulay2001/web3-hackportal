@@ -23,7 +23,7 @@
         }
     ],
     "hacktimeout": true,
-    "votetimeout": true,
+    "votetimeout": false,
     "projects": [
         {
             "id": "jnkcjbdwcjw",

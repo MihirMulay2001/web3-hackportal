@@ -481,9 +481,9 @@ function HackPage({ account, link }) {
         <TabPanel value={value} index={1}>
           {hackData.hacktimeout ? (
             hackData.votetimeout ? (
-              <LeaderboardSection />
+              <LeaderboardSection link={link} />
             ) : (
-              <ProjectsSection hackId={"hackId"} />
+              <ProjectsSection hackId={"hackId"} link={link} />
             )
           ) : (
             <div> Wait until hackathon is over </div>

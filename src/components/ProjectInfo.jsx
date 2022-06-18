@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from "react";
-import useFetcher from "../hooks/useFetcher";
-import data from "../data/project.json";
+import { useState } from "react";
+// import data from "../data/project.json";
+import AssistantIcon from "@mui/icons-material/Assistant";
+import GavelIcon from "@mui/icons-material/Gavel";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import StarsIcon from "@mui/icons-material/Stars";
+import TextField from "@mui/material/TextField";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import styles from "../styles/projectinfo.module.css";
-import TextField from '@mui/material/TextField';
-import GavelIcon from '@mui/icons-material/Gavel';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import StarsIcon from '@mui/icons-material/Stars';
-import AssistantIcon from '@mui/icons-material/Assistant';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import axios from 'axios';
-
-export default function ProjectInfo({ link, hack_id, projectId, handleToggle, vote, cmt }) {
+export default function ProjectInfo({
+  projectInfo: data,
+  handleToggle,
+  vote,
+  contract,
+}) {
   // const {loading, data} = useFetcher()
   const [voteTrack, setVoteTrack] = useState(null);
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const x = await contract.vote(data._id, voteTrack);
+      await x.wait();
+    } catch (e) {
+      alert(e);
+    }
+  };
   const handleVote = (event, newVote) => {
+    event.preventDefault();
     setVoteTrack(newVote);
   };
-
-  const votencmt = async () => {
-    await axios.patch(link + '/user/votencmt', {
-      event_id: hack_id,
-      team_leader_wallet_id: projectId,
-      comments: cmt
-    }).then(r => console.log(r));
-  }
 
   return (
     <div className={styles.container} onClick={handleToggle}>
@@ -39,7 +42,14 @@ export default function ProjectInfo({ link, hack_id, projectId, handleToggle, vo
         <i class="fas fa-globe"></i>
         <a href={data.etherscan}>{data.etherscan}</a>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <iframe
           src={"https://www.youtube.com/embed/wtvpQ9liu4g"}
           title="Youtube link"
@@ -48,8 +58,21 @@ export default function ProjectInfo({ link, hack_id, projectId, handleToggle, vo
           frameBorder={0}
           style={{ marginBottom: "15px" }}
         />
-        <TextField sx={{ width: "85%", marginBottom: "15px" }} multiline maxRows={4} label="Comment" variant="filled" />
-        <button className="paybtn" style={{ marginTop: "10px", borderWidth: 0, backgroundColor: "black" }} >
+        <TextField
+          sx={{ width: "85%", marginBottom: "15px" }}
+          multiline
+          maxRows={4}
+          label="Comment"
+          variant="filled"
+        />
+        <button
+          className="paybtn"
+          style={{
+            marginTop: "10px",
+            borderWidth: 0,
+            backgroundColor: "black",
+          }}
+        >
           <AssistantIcon />
           <h5> S E N D</h5>
         </button>
@@ -65,20 +88,29 @@ export default function ProjectInfo({ link, hack_id, projectId, handleToggle, vo
                 sx={{ marginBottom: "15px" }}
               >
                 {data.tracks.map((track, key) => (
-                  <ToggleButton key={key} value={track}>{track}</ToggleButton>
+                  <ToggleButton key={key} value={track}>
+                    {track}
+                  </ToggleButton>
                 ))}
               </ToggleButtonGroup>
             )}
-            <button className="paybtn" style={{ margin: 0, borderWidth: 0 }}>
-              {
-                data.personType === "judge" ? <GavelIcon /> : data.personType === "people" ? <LocalFireDepartmentIcon /> : <StarsIcon />
-              }
+            <button
+              className="paybtn"
+              style={{ margin: 0, borderWidth: 0 }}
+              onClick={handleSubmit}
+            >
+              {data.personType === "judge" ? (
+                <GavelIcon />
+              ) : data.personType === "people" ? (
+                <LocalFireDepartmentIcon />
+              ) : (
+                <StarsIcon />
+              )}
               <h5> V O T E</h5>
             </button>
           </>
         )}
       </div>
-    </div >
-
+    </div>
   );
 }

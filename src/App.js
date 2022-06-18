@@ -7,7 +7,7 @@ import axios from "axios";
 
 const link = "https://hackportalserver.herokuapp.com";
 
-const CONTRACT_ADDRESS = "0x95574ff0d2F8347b919d7a9687632b86D8760e68";
+const CONTRACT_ADDRESS = "0xb5E1E73A034EDD2f79137ee5C21b6E4978b8a674";
 
 function App() {
   const [account, setAccount] = useState(null);

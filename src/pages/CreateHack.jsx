@@ -182,8 +182,8 @@ function CreateHack({ account, link, contract }) {
                 ethers.utils.parseEther(_prize.amount, "ether")
               ),
               judgelist.map((_j) => _j.wallet_id),
-              submissiondate,
-              hackenddate,
+              Math.floor(submissiondate.valueOf() / 1000),
+              Math.floor(hackenddate.valueOf() / 1000),
               {
                 value: ethers.utils.parseEther(sum, "ether"),
               }
