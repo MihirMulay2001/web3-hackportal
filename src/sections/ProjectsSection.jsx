@@ -5,7 +5,7 @@ import ProjectCard from "../components/ProjectCard";
 import ProjectInfo from "../components/ProjectInfo";
 import ModalSection from "./ModalSection";
 import styles from "../styles/projectssection.module.css";
-import axios from 'axios';
+import axios from "axios";
 import hackData from "../data/data.json";
 
 export default function ProjectsSection({ link, hackId }) {
@@ -22,12 +22,13 @@ export default function ProjectsSection({ link, hackId }) {
 
   useEffect(() => {
     const getdata = async () => {
-      await axios.get(link + '/event/allsubmissions', {
-        event_id: hackId
-      }).then(r => setAllsubmissions(r.data));
-    }
+      await axios.get(link + "/event/allsubmissions/" + hackId).then((r) => {
+        console.log(r);
+        setAllsubmissions(r.data);
+      });
+    };
     getdata();
-  }, [])
+  }, []);
   return (
     <>
       {show && (
@@ -44,7 +45,7 @@ export default function ProjectsSection({ link, hackId }) {
       </div>
       <div className={styles.container}>
         <div className={styles.container}>
-          {hackData.projects.map((project, key) => (
+          {allsubmissions.map((project, key) => (
             <ProjectCard
               project={project}
               key={key}
@@ -72,7 +73,6 @@ export default function ProjectsSection({ link, hackId }) {
             />
           ))
         } */}
-
       </div>
     </>
   );

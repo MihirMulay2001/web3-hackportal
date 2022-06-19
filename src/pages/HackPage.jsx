@@ -133,19 +133,32 @@ function HackPage({ account, link }) {
   };
 
   const doSubmit = async () => {
-    if (
-      (await axios.get(link + "/event/getsubmissioninfo", {
-        event_id: hack_id,
+    const ans = await axios.get(
+      link +
+        `/event/submissioninfo/${localStorage.getItem(
+          "curr_hack_id"
+        )}/${teamlead_wallet_id}`
+    );
+    if (!ans.data) {
+      console.log({
+        event_id: localStorage.getItem("curr_hack_id"),
+        team_name: teamname,
         team_leader_wallet_id: teamlead_wallet_id,
-      })) === {}
-    ) {
+        teammates_wallet_ids: teammates_wallet_ids,
+        team_logo: "",
+        proj_name: projname,
+        proj_disc: projdisc,
+        live_link: livelink,
+        repo_link: repolink,
+        video_link: livelink,
+      });
       await axios
         .post(link + "/user/addsubmission", {
           event_id: hack_id,
           team_name: teamname,
           team_leader_wallet_id: teamlead_wallet_id,
           teammates_wallet_ids: teammates_wallet_ids,
-          team_logo: getlinkfromimg(teamlogo),
+          team_logo: "",
           proj_name: projname,
           proj_disc: projdisc,
           live_link: livelink,
@@ -308,7 +321,7 @@ function HackPage({ account, link }) {
                         label={"Team name"}
                         sx={{ width: "50%" }}
                         onChange={(e) => {
-                          setProjname(e.target.value);
+                          setTeamname(e.target.value);
                         }}
                       />
                       <TextField

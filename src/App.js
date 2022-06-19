@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Router from "./Router";
 import { ethers } from "ethers";
-import ContractJson from "./assets/abi/contract.json";
+import ContractJson from "./assets/abi/Factory.json";
 import axios from "axios";
 
 const link = "https://hackportalserver.herokuapp.com";
@@ -99,8 +99,12 @@ export default App;
 }
 */
 
-//62acc796797ca650bc458d63
+//hack 1: 62acc796797ca650bc458d63
 
 //hack 2: 62acca6f797ca650bc458d7e
 
 //project id: 62accbf5797ca650bc458d88
+
+//hack 10: 62af6bf7c1f73d9625d12073
+
+// hack 20: 62af6cf1c1f73d9625d12076

@@ -170,10 +170,11 @@ function CreateHack({ account, link, contract }) {
             competitor_coin_holders: competitor_coin_holders,
           })
           .then(async (r) => {
+            setHackcode(r.data._id);
             console.log(r);
             let sum = 0;
             for (const v of prizelist) {
-              sum += v;
+              sum += v.amount;
             }
             const res = await contract.createHackathon(
               5,
@@ -192,7 +193,6 @@ function CreateHack({ account, link, contract }) {
             axios.post(link + "/event/updateevent", {
               contractAddress: deployedContractAddress,
             });
-            setHackcode(r.data._id);
           });
       } catch (err) {
         console.log(err);
